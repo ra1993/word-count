@@ -1,43 +1,41 @@
 import string
 
-def remove_punctuation(value):
+def remove_punctuation(text):
     result = ""
-    for p in value:
-        p = p.strip('“,”')
+    for p in text:
+        p = p.strip('“,”') 
         if p not in string.punctuation:
             result += p
     return result   
 
-
-def wordFreq(n):
+def wordFreq(n, num_values= 10):
 
     opened_file = open(n, 'r')
 
     wordcount = {}
-    top10 = []
-
+    
+    counter = 0
     for line in opened_file:
         line = line.lower()
 
         line = remove_punctuation(line) #removes punctuations.....
         line = line.split(" ")
         
-    
         for i in line:
             if i in wordcount:
                  wordcount[i] += 1
             else:
                  wordcount[i] = 1
-
-    counter = 0
-    for k, v in sorted(wordcount.items(), reverse=False, key = lambda x: x[1]):
+ 
+    for k, v in sorted(wordcount.items(), reverse=True, key = lambda x: x[1]):
     
-        if counter <  10:
+        if counter <=  num_values: 
             counter += 1
-        print(k, v)   
-
-
+            print(k, v) 
+          
     opened_file.close() 
 
-print(wordFreq('article.txt'))
+print(wordFreq('article.txt', 20))
+
+
         
